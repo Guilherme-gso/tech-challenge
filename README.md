@@ -22,7 +22,7 @@ A API desenvolvida foi alocada no heroku, você pode acessar todos os recursos d
 Para acessar a documentação completa da API basta acessar: <a href="https://moviefy-challenge.herokuapp.com/docs">Documentação</a>
 
 Para baixar o projeto em sua máquina local basta clonar esse repositório: <br />
-<code>git clone https://github.com/Guilherme-gso/challenge-sthima.git</code>
+```git clone https://github.com/Guilherme-gso/tech-challenge```
 
 Após fazer a cópia do projeto em sua máquina será necessário instalar as dependências do projeto: <br />
 <code>npm install</code>
