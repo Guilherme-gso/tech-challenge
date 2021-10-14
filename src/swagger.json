@@ -1,0 +1,328 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "API desenvolvida no tech-challenge da Sthima",
+    "description": "Escolha seus filmes preferidos utilizando essa API",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Guilherme Oliveira",
+      "email": "guilhermegso1019@gmail.com",
+      "url": "https://github.com/guilherme-gso"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3333/api",
+      "description": "URL de desenvolvimento"
+    },
+    {
+      "url": "https://moviefy-challenge.herokuapp.com/api",
+      "description": "URL de produção"
+    }
+  ],
+  "paths": {
+    "/users/create": {
+      "post": {
+        "summary": "Cadastro de usuário",
+        "description": "Essa rota será responsável por cadastrar um novo usuário",
+        "tags": [
+          "Users"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "fullName": "John Doe",
+                    "email": "johndoe@gmail.com",
+                    "password": "complex-password"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "500": {
+            "description": "unexpected error"
+          },
+          "400": {
+            "description": "user already exists"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "items": {
+                    "$ref": "#/components/schemas/UserResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/auth": {
+      "post": {
+        "summary": "Autenticação",
+        "description": "Essa rota é responsável por autenticar um usuário",
+        "tags": [
+          "Authentication"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Auth"
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "email": "johndoe@gmail.com",
+                    "password": "complex-password"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "incorrect email/password"
+          },
+          "200": {
+            "description": "sucess auth"
+          }
+        }
+      }
+    },
+    "/movies/search": {
+      "get": {
+        "security": {
+          "bearerAuth": []
+        },
+        "summary": "Buscar filmes",
+        "description": "Essa rota será responsável por buscar um filme escolhido",
+        "tags": [
+          "Movies"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "Bearer ${userToken}"
+          },
+          {
+            "name": "movieTitle",
+            "in": "query",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "found movies"
+          },
+          "404": {
+            "description": "movie not found"
+          },
+          "401": {
+            "description": "unauthorized access"
+          }
+        }
+      }
+    },
+    "/movies/add-favorite": {
+      "post": {
+        "security": {
+          "bearerAuth": []
+        },
+        "summary": "Adicionar favoritos",
+        "description": "Essa rota será responsável por adicionar um filme aos favoritos do usuário",
+        "tags": [
+          "Movies"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "Bearer ${userToken}"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FavoriteMovie"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "movie added to favorites"
+          },
+          "401": {
+            "description": "unauthorized access"
+          }
+        }
+      }
+    },
+    "/movies/remove-favorite": {
+      "post": {
+        "security": {
+          "bearerAuth": []
+        },
+        "summary": "Remover favoritos",
+        "description": "Essa rota será responsável por remover um filme dos favoritos do usuário",
+        "tags": [
+          "Movies"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "Bearer ${userToken}"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveFavoriteMovie"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "movie removed to favorites"
+          },
+          "404": {
+            "description": "favorite not found"
+          },
+          "401": {
+            "description": "unauthorized access"
+          }
+        }
+      }
+    },
+    "/movies/favorites/{userId}": {
+      "get": {
+        "security": {
+          "bearerAuth": []
+        },
+        "summary": "Listar favoritos",
+        "description": "Essa rota será responsável por listar os filmes favoritos do usuário",
+        "tags": [
+          "Movies"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true,
+            "description": "Bearer ${userToken}"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "list of favorites"
+          },
+          "404": {
+            "description": "user not found"
+          },
+          "401": {
+            "description": "unauthorized access"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "UserResponse": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "FavoriteMovie": {
+        "type": "object",
+        "properties": {
+          "movieId": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          }
+        }
+      },
+      "RemoveFavoriteMovie": {
+        "type": "object",
+        "properties": {
+          "favoriteId": {
+            "type": "string"
+          }
+        }
+      },
+      "Auth": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

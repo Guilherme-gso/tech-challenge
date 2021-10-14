@@ -1,37 +1,51 @@
-# tech-challenge
+# Sthima Challenge
 
-### Desafio Backend
-Nosso passatempo favorito nessa quarentena tem sido assistir filmes e seriados, por isso pensamos em desenvolver uma solução que nos ajude na hora de selecionar o que mais gostamos. Caso você aceite o nosso desafio, precisamos que você implemente um sistema onde será possível buscar por filmes e séries utilizando a API (http://www.omdbapi.com/). Com todos esses filmes a nossa disposição queremos basicamente separar nossos favoritos, para que possamos encontrá-los facilmente depois. Portanto a sua solução deve:
+Esse projeto foi desenvolvido como o desafio técnico proposto pelo processo seletivo da Sthima
 
-- Permitir a busca por filmes que gostamos
-- Listar os filmes encontrados
-- Permitir que escolhamos nosso filmes favoritos
-- Permitir que removamos um filme de nossos favoritos (às vezes um filme enjoa)
-- Listar nossos filmes favoritos
+# Tecnologias utilizadas
+- NodeJS
+- TypeScript 
+- TypeORM
+- Ts Node Dev
+- PostgreSQL
+- ExpressJS
 
-Esse é um exemplo de API que esperamos para a construção deste desafio:
+# Padrões de projeto
+- Princípios SOLID
+- Factories
+- DDD (Domain Driven Design)
 
+# Como usar
+
+A API desenvolvida foi alocada no heroku, você pode acessar todos os recursos da aplicação em: <a href="https://moviefy-challenge.herokuapp.com/api">MovieFY API</a>
+
+Para acessar a documentação completa da API basta acessar: <a href="https://moviefy-challenge.herokuapp.com/docs">Documentação</a>
+
+Para baixar o projeto em sua máquina local basta clonar esse repositório: <br />
+<code>git clone https://github.com/Guilherme-gso/challenge-sthima.git</code>
+
+Após fazer a cópia do projeto em sua máquina será necessário instalar as dependências do projeto: <br />
+<code>npm install</code>
+
+Se você estiver usando o YARN como gerenciador de depêndencias: <br />
+<code>yarn</code>
+
+Após instalar as depêndencias será necessário setar o arquivo de configuração de variáveis de ambiente na raíz do projeto, o .env, na raíz do projeto existe um arquivo chamado .env.example, utilize-o como base para verificar as variáveis necessárias no projeto e as substitua com os valores de suas variáveis no arquivo .env que você criou anteriormente: <br />
 ```
-Chave de API: 925eba28
-Exemplo requisição: GET http://www.omdbapi.com/?apikey=925eba28&s=batman
+  PORT=3333
+  OMDB_API_KEY=YOUR_OMDB_KEY
+  APP_KEY=ANY_KEY_TO_GENERATE_TOKENS
+  DATABASE_URL=postgres://username:password@host:PORT/database
+  REDIS_HOST=YOUR_REDIS_HOST
+  REDIS_PORT=YOUR_REDIS_PORT
+  REDIS_PASSWORD=YOUR_REDIS_PASSWORD
+  NODE_ENV=dev
 ```
 
-### Comportamento esperado da aplicação:
-1) Ao buscar um filme, a aplicação deve buscar a informação em um banco de dados em memória (cache);
-2) Caso encontrar, os dados devem ser retornados. Caso não, a consulta deve ser realizada no banco de dados da aplicação (relacional ou não);
-3) Caso encontrar, os dados devem ser retornados. Caso não, deve ser feita a integração com a API dos filmes, salvando os dados no banco de dados da aplicação e em memória, e retornando os dados.
+Após isso para rodar o projeto em sua máquina local você deverá executar as migrations do banco de dados, ou seja, instanciar as tabelas do banco em seu banco de dados local, para isso utilize o comando: ```npm run typeorm migration:run``` <br />
+se estiver utlizando YARN: ```yarn typeorm migration:run```
 
-### Observações:
-* Pode ser utilizado qualquer banco de dados;
-* Stack de preferência: Node.js;
-* Caso deseje implementar o frontend a Stack de preferência é React ou React-Native;
-* Será um diferencial se a aplicação estiver hospedada em algum provedor;
-* É importante que haja uma descrição de como realizar o teste da solução.
+logo após instanciar seu banco de dados com as migrations basta executar o projeto utilizando o comando: ```npm run dev``` <br />
+se estiver utlizando YARN: ```yarn dev``` <br />
 
-### Entrega da sua solução
-Deixe bem claro suas premissas, suposições e como executamos seu código. Para entregar essa solução, de um “fork” neste repositório e nos mande o link do novo repositório quando finalizar a tarefa.
-O prazo para a entrega da solução é de 72h a partir de seu início.
-
-Aguardamos seu retorno,
-
-Boa sorte!
+Por padrão o projeto irá rodar na porta 3333 e se estiver tudo correto você receberá uma mensagem sem seu terminal similar a essa: Server Running on PORT: 3333
